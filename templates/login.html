@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Owl Redirect</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <p class="left">
+            <li><a href="/">Home</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+          </p>
+          <p class="right hide-if-logged-in">
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+          </p>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="login">
+        <form action="" method="post">
+          <p>
+            <input type="email" name="email" id="email" autocomplete="email" />
+          </p>
+          <p>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              autocomplete="new-password"
+            />
+          </p>
+          <p><input type="submit" value="Login" /></p>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>
