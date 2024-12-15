@@ -1,3 +1,4 @@
+# IMPORTS
 import os
 import flask
 from flask import session, request, redirect, url_for
@@ -11,10 +12,12 @@ app.config["SECRET_KEY"] = os.urandom(1024)
 
 # ROUTES
 @app.route("/")
+# INDEX
 def index():
     return flask.render_template("index.html")
 
 @app.route("/dashboard")
+# DASHBOARD
 def dashboard():
     if 'username' in session:
         username = session['username'] = 'admin'
@@ -25,6 +28,7 @@ def dashboard():
         return "You are not logged in <br><a href = '/login'>" + "click here to log in</a>"
 
 @app.route("/login", methods = ["GET", "POST"])
+# LOGIN
 def login():
     if request.method == 'POST':
         session['username'] = request.form['username']
@@ -32,6 +36,7 @@ def login():
     return flask.render_template("login.html")
 
 @app.route('/logout')
+# LOGOUT
 def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
