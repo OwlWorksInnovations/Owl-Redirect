@@ -21,9 +21,7 @@ def index():
 def dashboard():
     if 'username' in session:
         username = session['username'] = 'admin'
-        return ('Logged in as '
-                + username +
-                '<br>' + "<b><a href = '/logout'>click here to log out</a></b>")
+        return flask.render_template("dashboard.html")
     else:
         return "You are not logged in <br><a href = '/login'>" + "click here to log in</a>"
 

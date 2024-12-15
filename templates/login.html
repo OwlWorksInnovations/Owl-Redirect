@@ -7,7 +7,7 @@
   </head>
   <body>
     <header>
-      <nav>
+      <nav class="navbar">
         <ul>
           <p class="left">
             <li><a href="/">Home</a></li>
@@ -17,6 +17,10 @@
             <li><a href="/login">Login</a></li>
             <li><a href="/register">Register</a></li>
           </p>
+          <p class="right hide-if-not-logged-in">
+            {% if 'username' in session %} Logged in as {{ session['username']
+            }} {% endif %}
+          </p>
         </ul>
       </nav>
     </header>
@@ -25,7 +29,12 @@
       <section class="login">
         <form action="" method="post">
           <p>
-            <input type="email" name="email" id="email" autocomplete="email" />
+            <input
+              type="username"
+              name="username"
+              id="username"
+              autocomplete="username"
+            />
           </p>
           <p>
             <input
