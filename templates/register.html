@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - Owl Redirect</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/app.css') }}"
     />
-    <title>Home - Owl Redirect</title>
   </head>
   <body>
     <header>
@@ -36,26 +36,29 @@
     </header>
 
     <main>
-      <section>
-        <p>Welcome to Owl Redirect</p>
-        {% if 'username' not in session %}
-        <p class="hide-if-logged-in">
-          <a href="/login">Login</a> or <a href="/register">Register</a> to get
-          started.
-        </p>
-        {% endif %} {% if 'username' in session %}
-        <p><a href="/dashboard">Dashboard</a></p>
-        {% endif %}
-      </section>
-
-      <section>
-        <p>Features</p>
-        <p>Dashboard to manage all your redirects and statistics</p>
+      <section class="register">
+        <form action="" method="post">
+          <p>
+            <label for="username">Username</label>
+            <input
+              type="username"
+              name="username"
+              id="username"
+              autocomplete="username"
+            />
+          </p>
+          <p>
+            <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              autocomplete="new-password"
+            />
+          </p>
+          <p><input type="submit" value="Register" /></p>
+        </form>
       </section>
     </main>
-
-    <footer>
-      <p>&copy; 2024 Owl Redirect</p>
-    </footer>
   </body>
 </html>

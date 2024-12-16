@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - Owl Redirect</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/app.css') }}"
+    />
   </head>
   <body>
     <header>
@@ -13,14 +17,20 @@
             <li><a href="/">Home</a></li>
             <li><a href="/dashboard">Dashboard</a></li>
           </p>
+          {% if 'username' not in session %}
           <p class="right hide-if-logged-in">
             <li><a href="/login">Login</a></li>
             <li><a href="/register">Register</a></li>
           </p>
+          {% endif %} {% if 'username' in session %}
           <p class="right hide-if-not-logged-in">
             {% if 'username' in session %} Logged in as {{ session['username']
             }} {% endif %}
           </p>
+          <p>
+            <li><a href="/logout">Logout</a></li>
+          </p>
+          {% endif %}
         </ul>
       </nav>
     </header>
