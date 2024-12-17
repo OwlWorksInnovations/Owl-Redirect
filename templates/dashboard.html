@@ -34,5 +34,40 @@
         </ul>
       </nav>
     </header>
+
+    <main>
+      <section>
+        <form action="/dashboard/create-url" method="post" class="create-url">
+          <p>
+            <label for="url">Enter URL:</label>
+            <input type="url" name="url" placeholder="Enter URL" />
+          </p>
+          <p>
+            <label for="name">Enter name:</label>
+            <input type="name" name="name" placeholder="Enter name" />
+          </p>
+          <p>
+            <button type="submit">Create</button>
+          </p>
+        </form>
+      </section>
+
+      <section>
+        <table>
+          <tr>
+            <th>URL</th>
+            <th>Name</th>
+            <th>Redirects</th>
+          </tr>
+          {% for url in urls %}
+          <tr>
+            <td><a href="{{ url[1] }}">{{ url[1] }}</a></td>
+            <td>{{ url[2] }}</td>
+            <td>{{ url[3] }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </section>
+    </main>
   </body>
 </html>

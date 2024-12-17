@@ -17,6 +17,7 @@ def initialize_db():
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT)")
+    cursor.execute("CREATE TABLE IF NOT EXISTS urls (id INTEGER PRIMARY KEY AUTOINCREMENT, url TEXT, name TEXT)")
     conn.commit()
     conn.close()
 
@@ -43,7 +44,28 @@ def index():
 @app.route("/dashboard")
 def dashboard():
     if 'username' in session:
-        return flask.render_template("dashboard.html")
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM urls")
+        urls = cursor.fetchall()
+        conn.close()
+        return flask.render_template("dashboard.html", urls=urls)
+    return "You are not logged in <br><a href = '/login'>click here to log in</a>"
+
+@app.route("/dashboard/create-url", methods=["POST"])
+def create_url():
+    if 'username' in session:
+        url = request.form['url']
+        name = request.form['name']
+
+        if url != "" and name != "":
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO urls (url, name) VALUES (?, ?)", (url, name))
+            conn.commit()
+            conn.close()
+            return redirect("/dashboard")
+        return "Invalid URL or name"
     return "You are not logged in <br><a href = '/login'>click here to log in</a>"
 
 @app.route("/login", methods=["GET", "POST"])
