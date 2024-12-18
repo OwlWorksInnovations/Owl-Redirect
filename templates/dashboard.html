@@ -13,38 +13,30 @@
     <header>
       <nav class="navbar">
         <ul>
-          <p class="left">
-            <li><a href="/">Home</a></li>
-            <li><a href="/dashboard">Dashboard</a></li>
-          </p>
-          {% if 'username' not in session %}
-          <p class="right hide-if-logged-in">
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-          </p>
-          {% endif %} {% if 'username' in session %}
-          <p class="right hide-if-not-logged-in">
-            {% if 'username' in session %} Logged in as {{ session['username']
-            }} {% endif %}
-          </p>
-          <p>
-            <li><a href="/logout">Logout</a></li>
-          </p>
-          {% endif %}
+          <li><a href="/">Home</a></li>
+          <li><a href="/dashboard">Dashboard</a></li>
+          <li>
+            {% if 'username' not in session %}
+            <a href="/login">Login</a>
+            {% else %}
+            <a href="/logout">Logout</a>
+            {% endif %}
+          </li>
         </ul>
       </nav>
     </header>
 
     <main>
       <section>
+        <h1>Shorten URL</h1>
         <form action="/dashboard/create-url" method="post" class="create-url">
           <p>
             <label for="url">Enter URL:</label>
-            <input type="url" name="url" placeholder="Enter URL" />
+            <input type="url" name="url" placeholder="Enter URL" required />
           </p>
           <p>
-            <label for="name">Enter name:</label>
-            <input type="name" name="name" placeholder="Enter name" />
+            <label for="name">Enter name (optional):</label>
+            <input type="text" name="name" placeholder="Enter name" />
           </p>
           <p>
             <button type="submit">Create</button>
@@ -53,21 +45,60 @@
       </section>
 
       <section>
+        <h1>Your URLs</h1>
         <table>
-          <tr>
-            <th>URL</th>
-            <th>Name</th>
-            <th>Redirects</th>
-          </tr>
-          {% for url in urls %}
-          <tr>
-            <td><a href="{{ url[1] }}">{{ url[1] }}</a></td>
-            <td>{{ url[2] }}</td>
-            <td>{{ url[3] }}</td>
-          </tr>
-          {% endfor %}
+          <thead>
+            <tr>
+              <th>Original URL</th>
+              <th>Shortened URL</th>
+              <th>Name</th>
+              <th>Redirects</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for url in urls %}
+            <tr>
+              <td>
+                <a href="{{ url.original_url }}" target="_blank"
+                  >{{ url.original_url }}</a
+                >
+              </td>
+              <td>
+                <a href="{{ url.shortened_url }}" target="_blank"
+                  >{{ url.shortened_url }}</a
+                >
+                <button onclick="copyToClipboard('{{ url.shortened_url }}')">
+                  Copy
+                </button>
+              </td>
+              <td>{{ url.name }}</td>
+              <td>{{ url.views }}</td>
+              <td>
+                <button
+                  onclick="window.open('{{ url.shortened_url }}', '_blank')"
+                >
+                  Redirect
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
         </table>
       </section>
     </main>
+
+    <script>
+      function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(
+          function () {
+            alert("Copied to clipboard!");
+          },
+          function (err) {
+            console.error("Could not copy text: ", err);
+          }
+        );
+      }
+    </script>
   </body>
 </html>
